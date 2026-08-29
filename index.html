@@ -17,6 +17,8 @@
   .tag { color:var(--muted); font-size:19px; margin-top:10px; line-height:1.5; }
   .cta { display:inline-block; margin-top:28px; background:var(--yuzu); color:var(--ink); font-weight:800; font-size:18px; padding:16px 44px; border-radius:999px; text-decoration:none; box-shadow:0 6px 18px rgba(16,23,25,.10); }
   .cta.hidden { display:none; }
+  .cta2 { display:block; margin-top:14px; color:var(--teal); font-weight:700; text-decoration:none; }
+  .cta2.hidden { display:none; }
   .soon { margin-top:28px; color:var(--teal); font-weight:700; }
   .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-top:44px; text-align:left; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; }
@@ -31,8 +33,9 @@
   <div class="mascots"><img src="assets/yuzu-highfive.png" alt="QuestiO buddies high-fiving"></div>
   <h1>Questi<span class="o">O</span></h1>
   <p class="tag">tiny daily quests with friends.<br>no chat noise, no guilt — just showing up, together.</p>
-  <a id="cta" class="cta hidden" href="#">join the beta</a>
-  <p id="soon" class="soon">beta opening soon — check back here.</p>
+  <a id="cta" class="cta hidden" href="#">get QuestiO</a>
+  <a id="beta" class="cta2 hidden" href="#">or join the beta</a>
+  <p id="soon" class="soon">coming soon — check back here.</p>
   <div class="cards">
     <div class="card"><img src="assets/yuzu-wave.png" alt=""><h3>pick one small promise</h3><p>read ten pages. walk the block. check in on the days it happens — that's the whole game.</p></div>
     <div class="card"><img src="assets/cloud-love.png" alt=""><h3>buddies who notice</h3><p>friends cheer your check-ins, nudge you kindly, and catch you on the wobbly days.</p></div>
@@ -41,11 +44,16 @@
   <footer>© QuestiO · made with 🍋 by MindGamesLab</footer>
 </div>
 <script>
-  var tf = (window.QUESTIO || {}).TESTFLIGHT_URL;
-  if (tf) {
-    var cta = document.getElementById("cta");
-    cta.href = tf; cta.classList.remove("hidden");
+  var cfg = window.QUESTIO || {};
+  if (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL) {
     document.getElementById("soon").style.display = "none";
+    var cta = document.getElementById("cta");
+    cta.href = cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL;
+    cta.classList.remove("hidden");
+    if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
+      var beta = document.getElementById("beta");
+      beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
+    }
   }
 </script>
 </body>

@@ -27,7 +27,8 @@
   <h1><span id="who" class="handle">a buddy</span> invited you.</h1>
   <p class="tag">tiny daily quests, done together. they want you on theirs.</p>
   <a id="open" class="btn secondary" href="#">already have the app? open it</a>
-  <a id="get" class="btn primary hidden" href="#">get QuestiO (beta)</a>
+  <a id="get" class="btn primary hidden" href="#">get QuestiO</a>
+  <a id="beta" class="btn secondary hidden" href="#">or join the beta</a>
   <p class="hint">once you're in: Friends → search <b id="who2">their @handle</b> → add. they'll get a happy notification.</p>
 </div>
 <script>
@@ -39,9 +40,14 @@
     document.getElementById("who2").textContent = "@" + u;
   }
   document.getElementById("open").href = (cfg.APP_SCHEME || "questio://") + "friends" + (u ? "?add=" + u : "");
-  if (cfg.TESTFLIGHT_URL) {
+  if (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL) {
     var get = document.getElementById("get");
-    get.href = cfg.TESTFLIGHT_URL; get.classList.remove("hidden");
+    get.href = cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL;
+    get.classList.remove("hidden");
+    if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
+      var beta = document.getElementById("beta");
+      beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
+    }
   }
 </script>
 </body>
