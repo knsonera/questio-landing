@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuestiO — tiny daily quests with friends</title>
+<script src="config.js"></script>
+<style>
+  :root { --yuzu:#CAFF29; --turq:#19C5C0; --teal:#079B98; --bg:#F5F9FA; --ink:#101719; --muted:#566267; --card:#FFFFFF; --border:#E3EAEC; }
+  * { margin:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:640px; margin:0 auto; padding:48px 24px 64px; text-align:center; }
+  .mascots { display:flex; justify-content:center; gap:4px; }
+  .mascots img { width:110px; height:110px; object-fit:contain; }
+  h1 { font-size:clamp(30px,6vw,44px); font-weight:800; margin-top:18px; letter-spacing:-0.5px; }
+  h1 .o { color:var(--teal); }
+  .tag { color:var(--muted); font-size:19px; margin-top:10px; line-height:1.5; }
+  .cta { display:inline-block; margin-top:28px; background:var(--yuzu); color:var(--ink); font-weight:800; font-size:18px; padding:16px 44px; border-radius:999px; text-decoration:none; box-shadow:0 6px 18px rgba(16,23,25,.10); }
+  .cta.hidden { display:none; }
+  .soon { margin-top:28px; color:var(--teal); font-weight:700; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-top:44px; text-align:left; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; }
+  .card img { width:52px; height:52px; object-fit:contain; }
+  .card h3 { font-size:15px; margin-top:10px; }
+  .card p { color:var(--muted); font-size:13.5px; margin-top:6px; line-height:1.45; }
+  footer { margin-top:56px; color:var(--muted); font-size:12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mascots"><img src="assets/yuzu-highfive.png" alt="QuestiO buddies high-fiving"></div>
+  <h1>Questi<span class="o">O</span></h1>
+  <p class="tag">tiny daily quests with friends.<br>no chat noise, no guilt — just showing up, together.</p>
+  <a id="cta" class="cta hidden" href="#">join the beta</a>
+  <p id="soon" class="soon">beta opening soon — check back here.</p>
+  <div class="cards">
+    <div class="card"><img src="assets/yuzu-wave.png" alt=""><h3>pick one small promise</h3><p>read ten pages. walk the block. check in on the days it happens — that's the whole game.</p></div>
+    <div class="card"><img src="assets/cloud-love.png" alt=""><h3>buddies who notice</h3><p>friends cheer your check-ins, nudge you kindly, and catch you on the wobbly days.</p></div>
+    <div class="card"><img src="assets/drop-cheer.png" alt=""><h3>momentum, not streaks</h3><p>a missed day never zeroes you out. weeks build, they don't break.</p></div>
+  </div>
+  <footer>© QuestiO · made with 🍋 by MindGamesLab</footer>
+</div>
+<script>
+  var tf = (window.QUESTIO || {}).TESTFLIGHT_URL;
+  if (tf) {
+    var cta = document.getElementById("cta");
+    cta.href = tf; cta.classList.remove("hidden");
+    document.getElementById("soon").style.display = "none";
+  }
+</script>
+</body>
+</html>
