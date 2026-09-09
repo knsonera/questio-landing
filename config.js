@@ -11,5 +11,5 @@ window.QUESTIO = {
   // Empty string hides the form entirely.
   WAITLIST_URL: "https://joinwaitlist-dmfy7uqf5q-uc.a.run.app",
   // Optional one-liner under the tagline (anniversary, launch day…). Empty hides it.
-  ANNOUNCEMENT: "two years of habit buddies today 🍋 the beta is open.",
+  ANNOUNCEMENT: "two years today: from thesis project to public beta 🍋",
 };
