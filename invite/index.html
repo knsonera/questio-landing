@@ -18,8 +18,24 @@
   .btn { display:block; margin:14px auto 0; max-width:320px; font-weight:800; font-size:17px; padding:15px 20px; border-radius:999px; text-decoration:none; }
   .btn.primary { background:var(--yuzu); color:var(--ink); margin-top:28px; box-shadow:0 6px 18px rgba(16,23,25,.10); }
   .btn.secondary { border:2px solid var(--turq); color:var(--teal); }
-  .hidden { display:none; }
+  .hidden { display:none !important; }
   .hint { margin-top:22px; color:var(--muted); font-size:13px; line-height:1.5; }
+  .updates { margin-top:36px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:22px 18px; text-align:center; }
+  .updates h2 { font-size:17px; font-weight:800; }
+  .updates p { color:var(--muted); font-size:13.5px; margin-top:6px; line-height:1.5; }
+  .updates form { margin-top:14px; display:flex; flex-direction:column; gap:10px; align-items:center; }
+  .updates input[type=email] { width:100%; max-width:320px; font:inherit; font-size:16px; padding:12px 14px; border:2px solid var(--border); border-radius:14px; background:var(--bg); color:var(--ink); outline:none; }
+  .updates input[type=email]:focus { border-color:var(--turq); }
+  .platforms { display:flex; gap:8px; justify-content:center; }
+  .platforms label { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border:2px solid var(--border); border-radius:999px; font-size:13px; font-weight:700; color:var(--muted); cursor:pointer; }
+  .platforms label:has(input:checked) { border-color:var(--turq); color:var(--teal); background:#EAF9FA; }
+  .platforms input { accent-color:var(--teal); margin:0; }
+  .updates button { font:inherit; font-size:15px; font-weight:800; padding:12px 26px; border:0; border-radius:999px; background:var(--yuzu); color:var(--ink); cursor:pointer; }
+  .updates button:disabled { opacity:.6; cursor:default; }
+  .hp { position:absolute; left:-10000px; width:1px; height:1px; opacity:0; }
+  .msg { min-height:18px; margin-top:10px; font-size:13.5px; font-weight:700; }
+  .msg.ok { color:var(--teal); }
+  .msg.err { color:#B3261E; }
 </style>
 </head>
 <body>
@@ -31,6 +47,21 @@
   <a id="get" class="btn primary hidden" href="#">get QuestiO</a>
   <a id="beta" class="btn secondary hidden" href="#">or join the beta</a>
   <p class="hint">once you're in: Friends → search <b id="who2">their @handle</b> → add. they'll get a happy notification.</p>
+  <p id="note" class="hint hidden">the beta is free on iPhone via TestFlight. on android? leave your email below and we'll ping you the day it's ready.</p>
+  <section id="updates" class="updates hidden" data-source="invite">
+    <h2>keep me posted</h2>
+    <p>new builds, the android release, nothing else. unsubscribe with one reply.</p>
+    <form id="waitlist" novalidate>
+      <input type="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required aria-label="your email">
+      <div class="platforms">
+        <label><input type="radio" name="platform" value="ios" checked> iPhone</label>
+        <label><input type="radio" name="platform" value="android"> Android</label>
+      </div>
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit">keep me posted</button>
+    </form>
+    <p class="msg" role="status" aria-live="polite"></p>
+  </section>
 </div>
 <script>
   var q = new URLSearchParams(location.search);
@@ -41,15 +72,20 @@
     document.getElementById("who2").textContent = "@" + u;
   }
   document.getElementById("open").href = (cfg.APP_SCHEME || "questio://") + "friends" + (u ? "?add=" + u : "");
-  if (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL) {
+  var primary = cfg.BETA_FIRST ? cfg.TESTFLIGHT_URL : (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL);
+  if (primary) {
     var get = document.getElementById("get");
-    get.href = cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL;
+    get.href = primary;
     get.classList.remove("hidden");
-    if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
+    if (cfg.BETA_FIRST) {
+      get.textContent = "join the iOS beta";
+      document.getElementById("note").classList.remove("hidden");
+    } else if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
       var beta = document.getElementById("beta");
       beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
     }
   }
 </script>
+<script src="../waitlist.js"></script>
 </body>
 </html>

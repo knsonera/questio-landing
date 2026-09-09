@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <title>QuestiO — tiny daily quests with friends</title>
+<meta name="description" content="Tiny daily quests with a friend or two. One tap to check in, momentum instead of streaks, kind support instead of chat noise. Free iOS beta.">
 <script src="config.js"></script>
 <style>
   :root { --yuzu:#CAFF29; --turq:#19C5C0; --teal:#079B98; --bg:#F5F9FA; --ink:#101719; --muted:#566267; --card:#FFFFFF; --border:#E3EAEC; }
@@ -16,16 +17,35 @@
   h1 { font-size:clamp(30px,6vw,44px); font-weight:800; margin-top:18px; letter-spacing:-0.5px; }
   h1 .o { color:var(--teal); }
   .tag { color:var(--muted); font-size:19px; margin-top:10px; line-height:1.5; }
+  .announce { display:inline-block; margin-top:18px; padding:8px 16px; border-radius:999px; background:#EAF9FA; color:var(--teal); font-weight:700; font-size:14px; }
   .cta { display:inline-block; margin-top:28px; background:var(--yuzu); color:var(--ink); font-weight:800; font-size:18px; padding:16px 44px; border-radius:999px; text-decoration:none; box-shadow:0 6px 18px rgba(16,23,25,.10); }
-  .cta.hidden { display:none; }
   .cta2 { display:block; margin-top:14px; color:var(--teal); font-weight:700; text-decoration:none; }
-  .cta2.hidden { display:none; }
+  .note { margin-top:14px; color:var(--muted); font-size:14px; line-height:1.5; }
+  .note a { color:var(--teal); font-weight:700; text-decoration:none; }
   .soon { margin-top:28px; color:var(--teal); font-weight:700; }
+  .hidden { display:none !important; }
   .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-top:44px; text-align:left; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; }
   .card img { width:52px; height:52px; object-fit:contain; }
   .card h3 { font-size:15px; margin-top:10px; }
   .card p { color:var(--muted); font-size:13.5px; margin-top:6px; line-height:1.45; }
+  .updates { margin-top:44px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:24px 20px; }
+  .updates h2 { font-size:20px; font-weight:800; }
+  .updates p { color:var(--muted); font-size:14px; margin-top:8px; line-height:1.5; }
+  .updates form { margin-top:16px; display:flex; flex-direction:column; gap:12px; align-items:center; }
+  .updates input[type=email] { width:100%; max-width:360px; font:inherit; font-size:16px; padding:13px 16px; border:2px solid var(--border); border-radius:14px; background:var(--bg); color:var(--ink); outline:none; }
+  .updates input[type=email]:focus { border-color:var(--turq); }
+  .platforms { display:flex; gap:10px; justify-content:center; }
+  .platforms label { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:2px solid var(--border); border-radius:999px; font-size:14px; font-weight:700; color:var(--muted); cursor:pointer; }
+  .platforms label:has(input:checked) { border-color:var(--turq); color:var(--teal); background:#EAF9FA; }
+  .platforms input { accent-color:var(--teal); margin:0; }
+  .updates button { font:inherit; font-size:16px; font-weight:800; padding:13px 30px; border:0; border-radius:999px; background:var(--yuzu); color:var(--ink); cursor:pointer; }
+  .updates button:disabled { opacity:.6; cursor:default; }
+  .hp { position:absolute; left:-10000px; width:1px; height:1px; opacity:0; }
+  .msg { min-height:20px; margin-top:12px; font-size:14px; font-weight:700; }
+  .msg.ok { color:var(--teal); }
+  .msg.err { color:#B3261E; }
+  .fine { margin-top:10px; font-size:12px; color:var(--muted); }
   footer { margin-top:56px; color:var(--muted); font-size:12.5px; }
 </style>
 </head>
@@ -34,28 +54,54 @@
   <div class="mascots"><img src="assets/yuzu-highfive.png" alt="QuestiO buddies high-fiving"></div>
   <h1>Questi<span class="o">O</span></h1>
   <p class="tag">tiny daily quests with friends.<br>no chat noise, no guilt — just showing up, together.</p>
+  <p id="announce" class="announce hidden"></p>
   <a id="cta" class="cta hidden" href="#">get QuestiO</a>
   <a id="beta" class="cta2 hidden" href="#">or join the beta</a>
+  <p id="note" class="note hidden">free, on iPhone via TestFlight. android isn't ready yet — <a href="#updates">leave your email</a> and we'll ping you.</p>
   <p id="soon" class="soon">coming soon — check back here.</p>
   <div class="cards">
     <div class="card"><img src="assets/yuzu-wave.png" alt=""><h3>pick one small promise</h3><p>read ten pages. walk the block. check in on the days it happens — that's the whole game.</p></div>
     <div class="card"><img src="assets/cloud-love.png" alt=""><h3>buddies who notice</h3><p>friends cheer your check-ins, nudge you kindly, and catch you on the wobbly days.</p></div>
     <div class="card"><img src="assets/drop-cheer.png" alt=""><h3>momentum, not streaks</h3><p>a missed day never zeroes you out. weeks build, they don't break.</p></div>
   </div>
+  <section id="updates" class="updates hidden" data-source="landing">
+    <h2>stay in the loop</h2>
+    <p>occasional QuestiO news: new builds, the android release, the story behind it. no spam — unsubscribe with one reply.</p>
+    <form id="waitlist" novalidate>
+      <input type="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required aria-label="your email">
+      <div class="platforms">
+        <label><input type="radio" name="platform" value="ios" checked> iPhone</label>
+        <label><input type="radio" name="platform" value="android"> Android</label>
+      </div>
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit">keep me posted</button>
+    </form>
+    <p class="msg" role="status" aria-live="polite"></p>
+    <p class="fine">we store your email and the phone you picked, nothing else.</p>
+  </section>
   <footer>© QuestiO · made with 🍋 by MindGamesLab</footer>
 </div>
 <script>
   var cfg = window.QUESTIO || {};
-  if (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL) {
-    document.getElementById("soon").style.display = "none";
+  var primary = cfg.BETA_FIRST ? cfg.TESTFLIGHT_URL : (cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL);
+  if (primary) {
+    document.getElementById("soon").classList.add("hidden");
     var cta = document.getElementById("cta");
-    cta.href = cfg.APP_STORE_URL || cfg.TESTFLIGHT_URL;
+    cta.href = primary;
     cta.classList.remove("hidden");
-    if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
+    if (cfg.BETA_FIRST) {
+      cta.textContent = "join the iOS beta";
+      document.getElementById("note").classList.remove("hidden");
+    } else if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
       var beta = document.getElementById("beta");
       beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
     }
   }
+  if (cfg.ANNOUNCEMENT) {
+    var a = document.getElementById("announce");
+    a.textContent = cfg.ANNOUNCEMENT; a.classList.remove("hidden");
+  }
 </script>
+<script src="waitlist.js"></script>
 </body>
 </html>
