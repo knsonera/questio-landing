@@ -49,13 +49,13 @@
   footer { margin-top:56px; color:var(--muted); font-size:12.5px; }
 </style>
 </head>
-<body>
+<body data-page="landing">
 <div class="wrap">
   <div class="mascots"><img src="assets/yuzu-highfive.png" alt="QuestiO buddies high-fiving"></div>
   <h1>Questi<span class="o">O</span></h1>
   <p class="tag">tiny daily quests with friends.<br>no chat noise, no guilt — just showing up, together.</p>
   <p id="announce" class="announce hidden"></p>
-  <a id="cta" class="cta hidden" href="#">get QuestiO</a>
+  <a id="cta" class="cta hidden" href="#" data-stat="beta_click">get QuestiO</a>
   <a id="beta" class="cta2 hidden" href="#">or join the beta</a>
   <p id="note" class="note hidden">free, on iPhone via TestFlight. android isn't ready yet — <a href="#updates">leave your email</a> and we'll ping you.</p>
   <p id="soon" class="soon">coming soon — check back here.</p>
@@ -103,5 +103,6 @@
   }
 </script>
 <script src="waitlist.js"></script>
+<script src="stats.js"></script>
 </body>
 </html>
