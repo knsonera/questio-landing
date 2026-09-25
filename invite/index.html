@@ -80,9 +80,11 @@
     if (cfg.BETA_FIRST) {
       get.textContent = "join the iOS beta";
       document.getElementById("note").classList.remove("hidden");
-    } else if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
-      var beta = document.getElementById("beta");
-      beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
+    } else {
+      // On the App Store (since 2026-09-25): no beta link; Android still gets the email note.
+      var note = document.getElementById("note");
+      note.textContent = "free on iPhone. on android? leave your email below and we'll ping you the day it's ready.";
+      note.classList.remove("hidden");
     }
   }
 </script>

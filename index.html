@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <title>QuestiO — you decide how your friends show up for you</title>
-<meta name="description" content="Tiny daily quests with a friend or two — and you choose how they help when you slip: a gentle reminder, a push, the tiny version, or space. Free iOS beta.">
+<meta name="description" content="Tiny daily quests with a friend or two — and you choose how they help when you slip: a gentle reminder, a push, the tiny version, or space. Free on iPhone.">
 <script src="config.js"></script>
 <style>
   :root { --yuzu:#CAFF29; --turq:#19C5C0; --teal:#079B98; --bg:#F5F9FA; --ink:#101719; --muted:#566267; --card:#FFFFFF; --border:#E3EAEC; }
@@ -92,9 +92,11 @@
     if (cfg.BETA_FIRST) {
       cta.textContent = "join the iOS beta";
       document.getElementById("note").classList.remove("hidden");
-    } else if (cfg.APP_STORE_URL && cfg.TESTFLIGHT_URL) {
-      var beta = document.getElementById("beta");
-      beta.href = cfg.TESTFLIGHT_URL; beta.classList.remove("hidden");
+    } else {
+      // On the App Store (since 2026-09-25): no beta link; Android still gets the email note.
+      var note = document.getElementById("note");
+      note.innerHTML = 'free on iPhone. android isn\'t ready yet — <a href="#updates">leave your email</a> and we\'ll ping you.';
+      note.classList.remove("hidden");
     }
   }
   if (cfg.ANNOUNCEMENT) {
