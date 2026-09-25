@@ -11,5 +11,8 @@ window.QUESTIO = {
   // Empty string hides the form entirely.
   WAITLIST_URL: "https://joinwaitlist-dmfy7uqf5q-uc.a.run.app",
   // Optional one-liner under the tagline (anniversary, launch day…). Empty hides it.
-  ANNOUNCEMENT: "two years today: from thesis project to public beta 🍋",
+  // Cleared 2026-09-24: the anniversary line ("two years today…") was 15 days stale.
+  // Ready to paste the day 2.1.0 is approved, together with BETA_FIRST: false —
+  //   ANNOUNCEMENT: "new: QuestiO 2.1.0 is on the App Store 🍋",
+  ANNOUNCEMENT: "",
 };
