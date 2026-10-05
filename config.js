@@ -10,6 +10,7 @@ window.QUESTIO = {
   // Empty string hides the form entirely.
   WAITLIST_URL: "https://joinwaitlist-dmfy7uqf5q-uc.a.run.app",
   // Optional one-liner under the tagline (anniversary, launch day…). Empty hides it.
-  // Launch line since 2026-09-25 (2.1 live on the App Store). Clear it after a couple of weeks.
-  ANNOUNCEMENT: "new: QuestiO 2.1 is on the App Store 🍋",
+  // Launch line updated 2026-10-04 for the Instagram launch (2.2 "life happens" live since 2026-09-29).
+  // Clear it, or switch it to the Android launch line, in November.
+  ANNOUNCEMENT: "new: QuestiO 2.2 “life happens” is on the App Store 🍋",
 };
